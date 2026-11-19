@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Систематика растений</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);--bg:#F4F8F2;--ink:#1E2B22;--mut:#3F5446;--card:#fff;--g:#3E6B3A;--g2:#8FB78A;--ln:#0000001f;--s1:#E2EEDA;--s2:#FBEAD7;--s3:#DDEAF4;--s4:#EEE1EC;--s5:#DFEEE3;--s6:#DCE8D0;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#101712;--ink:#E8F0E6;--mut:#AEC1B2;--card:#18221B;--g:#8FC58A;--g2:#4E7D4A;--ln:#ffffff24;--s1:#1A2A1D;--s2:#2B2318;--s3:#16242E;--s4:#2A1E29;--s5:#17281F;--s6:#212A17;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#101712;--ink:#E8F0E6;--mut:#AEC1B2;--card:#18221B;--g:#8FC58A;--g2:#4E7D4A;--ln:#ffffff24;--s1:#1A2A1D;--s2:#2B2318;--s3:#16242E;--s4:#2A1E29;--s5:#17281F;--s6:#212A17;color-scheme:dark}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 70px)}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 16px/1.65 Inter,system-ui,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--bg);z-index:30}
+h1,h2,h3{font-family:Lora,Georgia,serif;margin:0;line-height:1.15}
+nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;gap:6px;align-items:center;padding:10px 20px;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(10px);border-bottom:1px solid var(--ln);overflow-x:auto}
+nav a{color:var(--mut);text-decoration:none;font:500 14px Inter,sans-serif;padding:8px 12px;border-radius:999px;white-space:nowrap;min-height:20px}
+nav a:hover{background:var(--s1);color:var(--ink)}
+nav b{font:700 18px Lora,serif;margin-right:auto;color:var(--g);white-space:nowrap}
+button{font:inherit;color:inherit;cursor:pointer}
+#th{border:1px solid var(--ln);background:var(--card);border-radius:999px;min-width:44px;min-height:44px}
+.hero{position:relative;overflow:hidden;padding:90px 24px 70px;text-align:center}
+.hero h1{font-size:clamp(40px,8vw,84px);max-width:900px;margin:12px auto 16px}
+.hero p{max-width:600px;margin:0 auto;color:var(--mut);font-size:18px}
+.blob{position:absolute;border-radius:50%;filter:blur(60px);opacity:.7;animation:fl 12s ease-in-out infinite alternate;z-index:0}
+.lf{position:absolute;z-index:0;animation:fl 9s ease-in-out infinite alternate}
+@keyframes fl{to{transform:translateY(-26px) rotate(8deg)}}
+.hero>*:not(.blob):not(.lf){position:relative;z-index:1}
+.tag{font:600 12px Inter,sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--g)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:14px;max-width:820px;margin:44px auto 0}
+.stat{background:var(--card);border:1px solid var(--ln);border-radius:20px;padding:18px}
+.stat b{display:block;font:700 34px Lora,serif;color:var(--g)}
+.stat span{font-size:13px;color:var(--mut)}
+.sec{max-width:1040px;margin:28px auto;padding:44px clamp(20px,5vw,52px);border-radius:32px}
+.sec h2{font-size:clamp(28px,4.5vw,40px);margin:8px 0 14px}
+.sec p{margin:0 0 12px;max-width:720px}
+.g{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:18px 0}
+.c{background:var(--card);border:1px solid var(--ln);border-radius:20px;padding:18px 20px;transition:transform .25s,box-shadow .25s}
+.c:hover{transform:translateY(-5px);box-shadow:0 14px 30px #0000001f}
+.c b{display:block;font:700 17px Lora,serif;margin-bottom:5px}
+.c span{font-size:14.5px;color:var(--mut)}
+.rv{opacity:0;transform:translateY(28px);transition:opacity .7s,transform .7s}
+.rv.in{opacity:1;transform:none}
+.tl{border-left:3px solid var(--g2);margin:20px 0 0 8px;padding-left:26px}
+.tl div{position:relative;margin-bottom:20px}
+.tl div::before{content:"";position:absolute;left:-35px;top:6px;width:13px;height:13px;border-radius:50%;background:var(--g)}
+.tl em{display:block;font:600 13px Inter;font-style:normal;color:var(--g)}
+.rk{display:block;width:var(--w);margin:0 auto 8px;text-align:left;border:0;background:var(--g2);color:#fff;border-radius:14px;padding:12px 18px;display:flex;justify-content:space-between;transition:.25s;min-height:44px;align-items:center}
+.rk:hover,.rk.on{background:var(--g);transform:scale(1.02)}
+.rk i{font-family:Lora,serif}
+#rkInfo,#stInfo{background:var(--card);border:1px solid var(--ln);border-radius:18px;padding:16px 20px;margin-top:12px;min-height:48px}
+.chip{display:inline-block;border:1px solid var(--ln);background:var(--card);border-radius:999px;padding:9px 16px;margin:0 4px 8px 0;font:500 14px Inter;min-height:44px;box-sizing:border-box}
+.chip.on{background:var(--g);color:var(--bg);border-color:var(--g)}
+.bw{display:flex;align-items:center;gap:12px;margin:10px 0;font:500 14px Inter}
+.bw label{width:170px;flex:none}
+.bt{flex:1;display:flex;height:22px;border-radius:11px;overflow:hidden;background:var(--card)}
+.bt i{display:block;width:0;transition:width 1.4s cubic-bezier(.2,.8,.2,1)}
+.three{display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:center}
+#cv{width:100%;height:400px;border-radius:24px;background:var(--card);border:1px solid var(--ln);cursor:grab;touch-action:pan-y;display:block}
+ul{padding-left:20px;margin:8px 0}li{margin-bottom:6px}
+footer{text-align:center;color:var(--mut);padding:40px 20px 60px;font-size:14px}
+@media(max-width:760px){.three{grid-template-columns:1fr}.bw label{width:110px;font-size:13px}#cv{height:320px}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.rv{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<nav><b>Систематика</b><a href="#t1">Предмет</a><a href="#t2">История</a><a href="#t3">Таксоны</a><a href="#t4">Методы</a><a href="#t5">Высшие</a><a href="#t6">Мхи</a><a href="#d3">3D</a><button id="th" aria-label="Сменить тему">◐</button></nav>
+
+<header class="hero">
+<div class="blob" style="width:340px;height:340px;background:var(--s1);left:-80px;top:-40px"></div>
+<div class="blob" style="width:300px;height:300px;background:var(--s2);right:-60px;top:80px;animation-delay:-4s"></div>
+<svg class="lf" style="left:8%;top:150px" width="90" height="90" viewBox="0 0 90 90" aria-hidden="true"><path d="M8 80C8 36 36 10 82 8c0 44-26 72-74 72z" fill="var(--g2)" opacity=".6"/><path d="M12 78L70 20" stroke="var(--g)" stroke-width="3"/></svg>
+<svg class="lf" style="right:9%;top:330px;animation-delay:-3s" width="70" height="70" viewBox="0 0 90 90" aria-hidden="true"><path d="M8 80C8 36 36 10 82 8c0 44-26 72-74 72z" fill="var(--g)" opacity=".45"/></svg>
+<div class="tag">Интерактивный конспект</div>
+<h1>Систематика растений</h1>
+<p>От предмета науки до мохообразных. Листайте, нажимайте, крутите 3D-модели.</p>
+<div class="stats">
+<div class="stat"><b data-n="400">0</b><span>тыс. видов растений</span></div>
+<div class="stat"><b data-n="1753">0</b><span>год «Species Plantarum»</span></div>
+<div class="stat"><b data-n="470">0</b><span>млн лет с выхода на сушу</span></div>
+<div class="stat"><b data-n="20">0</b><span>тыс. видов мхов</span></div>
+</div>
+</header>
+
+<section class="sec rv" id="t1" style="background:var(--s1)">
+<div class="tag">Тема 1</div><h2>Предмет, цели и задачи науки</h2>
+<p><b>Систематика растений</b> — раздел ботаники о многообразии растительного мира, его классификации и родственных связях между группами.</p>
+<div class="g">
+<div class="c"><b>Предмет</b><span>Всё разнообразие растений: происхождение, строение, распространение, родство.</span></div>
+<div class="c"><b>Цель</b><span>Построить естественную систему, отражающую эволюцию (филогению).</span></div>
+<div class="c"><b>Зачем</b><span>Охрана редких видов, сельское хозяйство, поиск лекарственных растений, Красные книги.</span></div>
+</div>
+<div class="g">
+<div class="c"><b>Таксономия</b><span>Теория и принципы классификации. Термин ввёл Декандоль в 1813 г.</span></div>
+<div class="c"><b>Филогенетика</b><span>Реконструкция эволюционных связей между группами.</span></div>
+<div class="c"><b>Номенклатура</b><span>Правила научного наименования растений.</span></div>
+</div>
+<b>Задачи:</b>
+<ul><li>описывать и открывать новые виды;</li><li>выяснять родство между таксонами;</li><li>классифицировать — делить растения на группы;</li><li>создавать определители, гербарии, флоры.</li></ul>
+</section>
+
+<section class="sec rv" id="t2" style="background:var(--s2)">
+<div class="tag">Тема 2</div><h2>История развития систематики</h2>
+<div class="tl">
+<div class="rv"><em>IV в. до н. э. — I в. н. э.</em><b>Теофраст</b> — «отец ботаники», описал около 500 растений. <b>Диоскорид</b> составил труд о лекарственных растениях, им пользовались больше 1500 лет.</div>
+<div class="rv"><em>XVI–XVII вв.</em><b>Искусственные системы:</b> Цезальпино (по плодам и семенам), Бок, Турнефор (ввёл понятие рода), Рэй (определил вид, разделил цветковые на одно- и двудольные).</div>
+<div class="rv"><em>1753 г.</em><b>Карл Линней</b>, «Species Plantarum»: бинарная номенклатура и половая система из 24 классов по тычинкам.</div>
+<div class="rv"><em>XVIII–XIX вв.</em><b>Естественные системы:</b> Жюссье (1789), Декандоль (1813) — учёт совокупности признаков.</div>
+<div class="rv"><em>1859 г.</em><b>Дарвин</b>, «Происхождение видов»: система должна отражать родство. Рождение филогенетической систематики — Энглер, Веттштейн, Кронквист, Тахтаджян.</div>
+<div class="rv"><em>XX–XXI вв.</em><b>Молекулярная систематика:</b> анализ ДНК, с 1998 г. система APG пересмотрела многие семейства.</div>
+</div>
+</section>
+
+<section class="sec rv" id="t3" style="background:var(--s3)">
+<div class="tag">Тема 3</div><h2>Таксономические категории и номенклатура</h2>
+<p><b>Таксон</b> — группа организмов, которую можно выделить как единое целое. Нажмите на ранг — на примере дуба черешчатого.</p>
+<div id="rks">
+<button class="rk" style="--w:100%" data-d="Всё растительное царство: наземные растения и их ближайшие предки.">Царство<i>Plantae</i></button>
+<button class="rk" style="--w:94%" data-d="Покрытосеменные: есть цветок, двойное оплодотворение и плод. Окончание отдела — -phyta.">Отдел<i>Magnoliophyta</i></button>
+<button class="rk" style="--w:88%" data-d="В традиционной системе — двудольные. Окончание класса — -opsida.">Класс<i>Magnoliopsida</i></button>
+<button class="rk" style="--w:82%" data-d="Буковые: ветроопыляемые деревья с однополыми цветками. Окончание порядка — -ales.">Порядок<i>Fagales</i></button>
+<button class="rk" style="--w:76%" data-d="Дубы, буки, каштаны; плод — орех в плюске. Окончание семейства — -aceae.">Семейство<i>Fagaceae</i></button>
+<button class="rk" style="--w:70%" data-d="Дубы: несколько сотен видов, плод — жёлудь.">Род<i>Quercus</i></button>
+<button class="rk" style="--w:64%" data-d="Дуб черешчатый: основная единица систематики. Название = род + видовой эпитет, по-латыни, курсивом.">Вид<i>Quercus robur</i></button>
+</div>
+<div id="rkInfo">Выберите ранг.</div>
+<div class="g">
+<div class="c"><b>Вид</b><span>Особи сходного строения и происхождения, свободно скрещиваются, дают плодовитое потомство, общий ареал.</span></div>
+<div class="c"><b>Внутривидовые ранги</b><span>Подвид (subsp.), разновидность (var.), форма (f.); отдельно — сорт.</span></div>
+<div class="c"><b>Приоритет</b><span>Верно старейшее законное название; для сосудистых растений отсчёт с 1753 г. У названия есть типовой образец — гербарный лист.</span></div>
+</div>
+</section>
+
+<section class="sec rv" id="t4" style="background:var(--s4)">
+<div class="tag">Тема 4</div><h2>Методы исследования в систематике</h2>
+<p>Чем больше независимых признаков, тем надёжнее вывод о родстве. Поэтому современные работы сочетают методы.</p>
+<div class="g">
+<div class="c"><b>Морфологический</b><span>Внешнее строение; основа остальных.</span></div>
+<div class="c"><b>Анатомический</b><span>Внутреннее строение тканей.</span></div>
+<div class="c"><b>Эмбриологический</b><span>Развитие зародыша и семязачатка.</span></div>
+<div class="c"><b>Палинологический</b><span>Форма и скульптура пыльцы и спор.</span></div>
+<div class="c"><b>Кариологический</b><span>Число и строение хромосом.</span></div>
+<div class="c"><b>Палеоботанический</b><span>Ископаемые остатки, ход эволюции.</span></div>
+<div class="c"><b>Эколого-географический</b><span>Ареал и связь со средой.</span></div>
+<div class="c"><b>Биохимический</b><span>Хемосистематика: алкалоиды, пигменты, масла.</span></div>
+<div class="c"><b>Молекулярный</b><span>Сравнение ДНК; баркодинг по генам rbcL, matK, ITS.</span></div>
+</div>
+</section>
+
+<section class="sec rv" id="t5" style="background:var(--s5)">
+<div class="tag">Тема 5</div><h2>Общая характеристика высших растений</h2>
+<p>Произошли от зелёных водорослей и вышли на сушу около 470 млн лет назад. Преимущественно наземные многоклеточные фототрофы: хлорофиллы a и b, запас — крахмал, стенка — целлюлоза.</p>
+<ul><li>Ткани и органы; тело покрыто кутикулой.</li><li>Половые органы многоклеточные: антеридии и архегонии; из зиготы развивается зародыш.</li><li>Чередование поколений: гаметофит (n) ↔ спорофит (2n). Размножение спорами из спорангиев.</li></ul>
+<div style="margin-top:14px"><span class="chip">Мохообразные · ~20 тыс.</span><span class="chip">Плауновидные · ~1,3 тыс.</span><span class="chip">Папоротниковидные · ~11 тыс.</span><span class="chip">Голосеменные · ~1 тыс.</span><span class="chip">Покрытосеменные · ~300 тыс.</span></div>
+<h3 style="margin:22px 0 6px;font-size:20px">Какое поколение главное</h3>
+<div class="bw"><label>Мохообразные</label><div class="bt"><i data-w="85" style="background:var(--g2)"></i><i data-w="15" style="background:var(--g)"></i></div></div>
+<div class="bw"><label>Плауны, папоротники</label><div class="bt"><i data-w="8" style="background:var(--g2)"></i><i data-w="92" style="background:var(--g)"></i></div></div>
+<div class="bw"><label>Голосеменные</label><div class="bt"><i data-w="3" style="background:var(--g2)"></i><i data-w="97" style="background:var(--g)"></i></div></div>
+<div class="bw"><label>Покрытосеменные</label><div class="bt"><i data-w="1.5" style="background:var(--g2)"></i><i data-w="98.5" style="background:var(--g)"></i></div></div>
+<p style="font-size:13px;color:var(--mut)">Светлое — гаметофит, тёмное — спорофит (схематично). Эволюция идёт к уменьшению гаметофита; мхи — исключение.</p>
+</section>
+
+<section class="sec rv" id="t6" style="background:var(--s6)">
+<div class="tag">Тема 6</div><h2>Отдел Мохообразные (Bryophyta)</h2>
+<p>Около 20 тысяч видов. Самые просто устроенные высшие растения, живут во влажных местах. Нет настоящих корней и проводящих пучков — вместо корней <b>ризоиды</b>. Гаметофит — зелёное растение, спорофит — коробочка на ножке, питается за счёт гаметофита.</p>
+<h3 style="font-size:20px;margin:18px 0 10px">Цикл развития — нажимайте шаги</h3>
+<div id="st">
+<button class="chip on" data-d="Спора прорастает во влажной среде.">спора</button>
+<button class="chip" data-d="Зелёная нить; из её почек вырастают побеги мха.">протонема</button>
+<button class="chip" data-d="Зелёное растение мха с ризоидами; доминирует в цикле.">гаметофит</button>
+<button class="chip" data-d="Антеридии дают сперматозоиды, архегонии — яйцеклетки.">гаметы</button>
+<button class="chip" data-d="Оплодотворение возможно только в капле воды — поэтому мхи привязаны ко влаге. Зигота диплоидна (2n).">зигота</button>
+<button class="chip" data-d="Коробочка на ножке: стопа, ножка, спорангий с крышечкой. Питается от гаметофита.">спорофит</button>
+<button class="chip" data-d="Образуются в коробочке после мейоза и разносятся ветром.">споры</button>
+</div>
+<div id="stInfo"></div>
+<div class="g">
+<div class="c"><b>Печёночники</b><span>Слоевище, как у маршанции (<i>Marchantia</i>); бесполое размножение выводковыми корзинками.</span></div>
+<div class="c"><b>Листостебельные</b><span>Кукушкин лён, фунария, сфагнум. Листья из одного слоя клеток. Самая крупная группа.</span></div>
+<div class="c"><b>Антоцеротовые</b><span>Роговики; спорофит похож на рожок. В современных системах — отдельный отдел.</span></div>
+</div>
+<b>Значение:</b>
+<ul><li>Сфагнум впитывает воду в десятки раз больше своей массы и образует <b>торф</b>.</li><li>Торфяные болота накапливают углерод и питают реки.</li><li>Первыми поселяются на голых породах и готовят почву.</li><li>Регулируют влажность лесов, служат индикаторами чистоты воздуха.</li></ul>
+</section>
+
+<section class="sec rv" id="d3" style="background:var(--card);border:1px solid var(--ln)">
+<div class="tag">3D-модели</div><h2>Покрутите растение</h2>
+<div class="three">
+<canvas id="cv" aria-label="3D-модель растения"></canvas>
+<div>
+<span class="chip on" data-m="0" role="button" tabindex="0">Мох</span><span class="chip" data-m="1" role="button" tabindex="0">Цветок</span>
+<p id="mi" style="margin-top:10px"></p>
+<p style="font-size:13px;color:var(--mut)">Тяните мышью или пальцем, чтобы вращать.</p>
+</div>
+</div>
+</section>
+<footer>Конспект по систематике растений. Удачной подготовки.</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+var $=function(s,e){return Array.prototype.slice.call((e||document).querySelectorAll(s))};
+var rt=document.documentElement;
+$('#th')[0].onclick=function(){var d=rt.getAttribute('data-theme')==='dark'||(!rt.getAttribute('data-theme')&&matchMedia('(prefers-color-scheme:dark)').matches);rt.setAttribute('data-theme',d?'light':'dark');rb()};
+var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');$('[data-w]',e.target).forEach(function(i){i.style.width=i.dataset.w+'%'});io.unobserve(e.target)}})},{threshold:.12});
+$('.rv').forEach(function(e){io.observe(e)});
+$('[data-n]').forEach(function(el){var t=+el.dataset.n,s=performance.now();(function f(n){var p=Math.min((n-s)/1800,1);el.textContent=Math.round(t*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f)})(s)});
+$('.rk').forEach(function(b){b.onclick=function(){$('.rk').forEach(function(x){x.classList.remove('on')});b.classList.add('on');$('#rkInfo')[0].textContent=b.dataset.d}});
+function st(b){$('#st .chip').forEach(function(x){x.classList.remove('on')});b.classList.add('on');$('#stInfo')[0].textContent=b.dataset.d}
+$('#st .chip').forEach(function(b){b.onclick=function(){st(b)}});st($('#st .chip')[0]);
+var cv=$('#cv')[0],R,S,C,G,mode=0,info=['Мох: невысокая подушка гаметофита (зелёное), над ним спорофиты — тонкие ножки с коробочками.','Цветок покрытосеменных: стебель, листья и венчик лепестков вокруг центра с тычинками и пестиком.'];
+function rnd(a,b){return a+Math.random()*(b-a)}
+function M(c){return new THREE.MeshStandardMaterial({color:c,flatShading:true,roughness:.8})}
+function build(){
+ if(G)S.remove(G);G=new THREE.Group();S.add(G);
+ if(mode===0){
+  var m=new THREE.Mesh(new THREE.SphereGeometry(1.5,24,14),M(0x4E7D4A));m.scale.y=.5;m.position.y=-.5;G.add(m);
+  for(var i=0;i<90;i++){var a=rnd(0,6.28),r=rnd(0,1.35),y=.75*Math.sqrt(Math.max(0,1-r*r/2.25))-.5;var s=new THREE.Mesh(new THREE.SphereGeometry(rnd(.1,.2),8,6),M([0x6A9A58,0x5C8E57,0x7FAE6A][i%3]));s.position.set(Math.cos(a)*r,y+.05,Math.sin(a)*r);G.add(s)}
+  for(var j=0;j<9;j++){var a2=rnd(0,6.28),r2=rnd(0,1),y2=.75*Math.sqrt(Math.max(0,1-r2*r2/2.25))-.5,h=rnd(.9,1.4);var p=new THREE.Mesh(new THREE.CylinderGeometry(.015,.02,h,6),M(0x8A5A2B));p.position.set(Math.cos(a2)*r2,y2+h/2,Math.sin(a2)*r2);G.add(p);var k=new THREE.Mesh(new THREE.SphereGeometry(.09,10,8),M(0xB07A3A));k.scale.y=1.9;k.position.set(p.position.x,y2+h+.08,p.position.z);G.add(k)}
+ }else{
+  var st=new THREE.Mesh(new THREE.CylinderGeometry(.05,.07,2.2,8),M(0x4E7D4A));st.position.y=-.2;G.add(st);
+  for(var l=0;l<2;l++){var lf=new THREE.Mesh(new THREE.SphereGeometry(.5,10,8),M(0x6A9A58));lf.scale.set(1,.08,.4);lf.position.set(l?-.5:.5,-.6+l*.3,0);lf.rotation.z=l?.4:-.4;G.add(lf)}
+  for(var q=0;q<8;q++){var an=q*Math.PI/4,pt=new THREE.Mesh(new THREE.SphereGeometry(.5,12,8),M(q%2?0xE58AA8:0xF0A3BC));pt.scale.set(1,.1,.38);pt.position.set(Math.cos(an)*.55,.95,Math.sin(an)*.55);pt.rotation.y=-an;G.add(pt)}
+  var ce=new THREE.Mesh(new THREE.SphereGeometry(.2,12,10),M(0xE8C34A));ce.position.y=1;G.add(ce);
+ }
+ $('#mi')[0].textContent=info[mode];
+}
+function rs(){if(!R)return;var w=cv.clientWidth,h=cv.clientHeight;R.setSize(w,h,false);C.aspect=w/h;C.updateProjectionMatrix()}
+function rb(){if(R)R.setClearColor(getComputedStyle(cv).backgroundColor,1)}
+try{
+ R=new THREE.WebGLRenderer({canvas:cv,antialias:true});S=new THREE.Scene();C=new THREE.PerspectiveCamera(40,1,.1,50);C.position.set(0,1.2,5.6);C.lookAt(0,.2,0);
+ S.add(new THREE.AmbientLight(0xffffff,.75));var dl=new THREE.DirectionalLight(0xffffff,.8);dl.position.set(3,5,4);S.add(dl);
+ R.setPixelRatio(Math.min(devicePixelRatio,2));rs();rb();build();
+ var dr=false,lx=0;
+ cv.onpointerdown=function(e){dr=true;lx=e.clientX;cv.setPointerCapture(e.pointerId)};
+ cv.onpointerup=function(){dr=false};
+ cv.onpointermove=function(e){if(dr){G.rotation.y+=(e.clientX-lx)*.01;lx=e.clientX}};
+ addEventListener('resize',rs);
+ (function loop(){if(!dr)G.rotation.y+=.006;R.render(S,C);requestAnimationFrame(loop)})();
+ $('[data-m]').forEach(function(b){var f=function(){$('[data-m]').forEach(function(x){x.classList.remove('on')});b.classList.add('on');mode=+b.dataset.m;build()};b.onclick=f;b.onkeydown=function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();f()}}});
+}catch(e){$('#mi')[0].textContent='3D недоступно в этом браузере.'}
+})();
+</script>
+</body>
+</html>
